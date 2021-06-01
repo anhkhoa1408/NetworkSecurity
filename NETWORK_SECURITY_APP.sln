@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31025.194
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NETWORK_SECURITY_APP", "NETWORK_SECURITY_APP.csproj", "{FAC433CB-018F-4C95-AD61-7A4E1BECC78D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FAC433CB-018F-4C95-AD61-7A4E1BECC78D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FAC433CB-018F-4C95-AD61-7A4E1BECC78D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FAC433CB-018F-4C95-AD61-7A4E1BECC78D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FAC433CB-018F-4C95-AD61-7A4E1BECC78D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {82CC059B-C95C-4203-84B3-B73FC202ECC0}
+	EndGlobalSection
+EndGlobal
