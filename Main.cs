@@ -35,7 +35,7 @@ namespace NETWORK_SECURITY_APP
             return output;
         }
 
-        static string Ceasar_Decrypt(string text, int shift)
+        public static string Ceasar_Decrypt(string text, int shift)
         {
             char[] characters = text.ToCharArray();
             for (int i = 0; i < characters.Length; i++)
@@ -78,13 +78,12 @@ namespace NETWORK_SECURITY_APP
             }
 
             foreach (KeyValuePair<char, int> pair in characterCount.OrderByDescending(i => i.Value))
-            {  
+            {
                 int shift = 0;
                 char c = pair.Key;
 
                 if (char.IsLetter(c))
                 {
-                    Console.WriteLine("{0} - {1}", pair.Key, pair.Value);
                     while (c != 'e')
                     {
                         c--;
@@ -114,8 +113,8 @@ namespace NETWORK_SECURITY_APP
             return arr;
         }
 
-        
-        private static char[][] BuildCleanMatrix(int rows, int cols)
+
+        public static char[][] BuildCleanMatrix(int rows, int cols)
         {
             char[][] result = new char[rows][];
 
@@ -127,7 +126,7 @@ namespace NETWORK_SECURITY_APP
             return result;
         }
 
-        private static string BuildStringFromMatrix(char[][] matrix)
+        public static string BuildStringFromMatrix(char[][] matrix)
         {
             string result = string.Empty;
 
@@ -144,7 +143,7 @@ namespace NETWORK_SECURITY_APP
             return result;
         }
 
-        private static string RailFence(string clearText, int key)
+        public static string RailFence_Encrypt(string clearText, int key)
         {
             string result = string.Empty;
 
@@ -165,6 +164,83 @@ namespace NETWORK_SECURITY_APP
 
             result = BuildStringFromMatrix(matrix);
 
+            return result;
+        }
+
+        public static String RailFence_Decrypt(String text, int key)
+        {
+            char[,] rail = new char[key, text.Length];
+            for (int i = 0; i < key; i++)
+                for (int j = 0; j < text.Length; j++)
+                    rail[i, j] = '_';
+
+            bool dir_down = true;
+            int row = 0, col = 0;
+            for (int i = 0; i < text.Length; i++)
+            {
+                if (row == 0)
+                    dir_down = true;
+                if (row == key - 1)
+                    dir_down = false;
+
+                rail[row, col++] = '*';
+                if (dir_down)
+                {
+                    row += 1;
+                }
+                else
+                {
+                    row -= 1;
+                }
+            }
+
+
+            int index = 0;
+            for (int i = 0; i < key; i++)
+                for (int j = 0; j < text.Length; j++)
+                    if (rail[i, j] == '*' && index < text.Length)
+                        rail[i, j] = text[index++];
+
+
+
+            string result = "";
+
+            row = 0;
+            col = 0;
+            for (int i = 0; i < text.Length; i++)
+            {
+                if (row == 0)
+                    dir_down = true;
+                if (row == key - 1)
+                    dir_down = false;
+
+                if (rail[row, col] != '*')
+                    result += rail[row, col++].ToString();
+
+                if (dir_down)
+                {
+                    row += 1;
+                }
+                else
+                {
+                    row -= 1;
+                }
+            }
+            return result;
+        }
+
+        public static string[] RailFence_Loop(string text)
+        {
+            string[] result = new string[text.Length - 2];
+            for (int z = 2; z < text.Length; z++)
+            {
+                int key = z;
+                result[z - 2] = "Key is " + key.ToString();
+                result[z - 2] += System.Environment.NewLine;
+                result[z - 2] += System.Environment.NewLine;
+                result[z - 2] += RailFence_Decrypt(text, key);
+                
+            }
             return result;
         }
 
@@ -219,7 +295,7 @@ namespace NETWORK_SECURITY_APP
                 inputEncryptBox.Focus();
                 return;
             }
-            
+
             if (techniqueBox.Text == "Ceasar")
             {
                 string result = Ceasar_Encrypt(inputEncryptBox.Text, Int32.Parse(keyBox.Text));
@@ -242,7 +318,7 @@ namespace NETWORK_SECURITY_APP
                     techniqueBox.Focus();
                     return;
                 }
-                string result = RailFence(inputEncryptBox.Text, Int32.Parse(keyBox.Text));
+                string result = RailFence_Encrypt(inputEncryptBox.Text, Int32.Parse(keyBox.Text));
                 title = "Result";
                 buttons = MessageBoxButtons.OK;
                 MessageBox.Show(result, title, buttons);
@@ -263,7 +339,7 @@ namespace NETWORK_SECURITY_APP
                     return;
                 }
                 string firstResult = Ceasar_Encrypt(inputEncryptBox.Text, Int32.Parse(keyBox.Text));
-                string finalResult = RailFence(firstResult, Int32.Parse(keyBox.Text));
+                string finalResult = RailFence_Encrypt(firstResult, Int32.Parse(keyBox.Text));
                 title = "Result";
                 buttons = MessageBoxButtons.OK;
                 MessageBox.Show(finalResult, title, buttons);
@@ -283,9 +359,18 @@ namespace NETWORK_SECURITY_APP
                 inputEncryptBox.Focus();
                 return;
             }
-            string[] str = Ceasar_Bruteforce(inputDecryptBox.Text);
-            Output output = new Output(str);
-            output.Show();
+            if (decryptTechnique.Text == "Ceasar")
+            {
+                string[] str = Ceasar_Bruteforce(inputDecryptBox.Text);
+                Output output = new Output(str);
+                output.Show();
+            }
+            else if (decryptTechnique.Text == "Rail Fence")
+            {
+                string[] result = RailFence_Loop(inputDecryptBox.Text);
+                Output output = new Output(result);
+                output.Show();
+            }    
         }
     }
 }
