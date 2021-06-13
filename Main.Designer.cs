@@ -43,11 +43,11 @@ namespace NETWORK_SECURITY_APP
             this.inputText = new System.Windows.Forms.Label();
             this.inputEncryptBox = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.decryptTechnique = new System.Windows.Forms.ComboBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.decryptBtn = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.inputDecryptBox = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.decryptTechnique = new System.Windows.Forms.ComboBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tabControl1.SuspendLayout();
@@ -205,13 +205,36 @@ namespace NETWORK_SECURITY_APP
             this.tabPage2.Text = "Decrypt";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // decryptTechnique
+            // 
+            this.decryptTechnique.FormattingEnabled = true;
+            this.decryptTechnique.Items.AddRange(new object[] {
+            "Ceasar",
+            "Rail Fence",
+            "Combine"});
+            this.decryptTechnique.Location = new System.Drawing.Point(121, 54);
+            this.decryptTechnique.Name = "decryptTechnique";
+            this.decryptTechnique.Size = new System.Drawing.Size(212, 28);
+            this.decryptTechnique.TabIndex = 8;
+            // 
+            // label5
+            // 
+            this.label5.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label5.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.label5.Location = new System.Drawing.Point(16, 46);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(99, 41);
+            this.label5.TabIndex = 7;
+            this.label5.Text = "Technique";
+            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // decryptBtn
             // 
             this.decryptBtn.BackColor = System.Drawing.Color.LightSeaGreen;
             this.decryptBtn.Cursor = System.Windows.Forms.Cursors.Hand;
             this.decryptBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.decryptBtn.ForeColor = System.Drawing.SystemColors.HighlightText;
-            this.decryptBtn.Location = new System.Drawing.Point(279, 330);
+            this.decryptBtn.Location = new System.Drawing.Point(278, 349);
             this.decryptBtn.Name = "decryptBtn";
             this.decryptBtn.Size = new System.Drawing.Size(111, 41);
             this.decryptBtn.TabIndex = 6;
@@ -223,7 +246,7 @@ namespace NETWORK_SECURITY_APP
             // 
             this.label4.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label4.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.label4.Location = new System.Drawing.Point(16, 89);
+            this.label4.Location = new System.Drawing.Point(16, 119);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(99, 41);
             this.label4.TabIndex = 3;
@@ -233,35 +256,12 @@ namespace NETWORK_SECURITY_APP
             // inputDecryptBox
             // 
             this.inputDecryptBox.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.inputDecryptBox.Location = new System.Drawing.Point(121, 97);
+            this.inputDecryptBox.Location = new System.Drawing.Point(121, 127);
             this.inputDecryptBox.Multiline = true;
             this.inputDecryptBox.Name = "inputDecryptBox";
             this.inputDecryptBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.inputDecryptBox.Size = new System.Drawing.Size(501, 189);
             this.inputDecryptBox.TabIndex = 1;
-            // 
-            // label5
-            // 
-            this.label5.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label5.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.label5.Location = new System.Drawing.Point(16, 30);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(99, 41);
-            this.label5.TabIndex = 7;
-            this.label5.Text = "Technique";
-            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // decryptTechnique
-            // 
-            this.decryptTechnique.FormattingEnabled = true;
-            this.decryptTechnique.Items.AddRange(new object[] {
-            "Ceasar",
-            "Rail Fence",
-            "Combine"});
-            this.decryptTechnique.Location = new System.Drawing.Point(121, 38);
-            this.decryptTechnique.Name = "decryptTechnique";
-            this.decryptTechnique.Size = new System.Drawing.Size(212, 28);
-            this.decryptTechnique.TabIndex = 8;
             // 
             // Main
             // 
@@ -273,7 +273,6 @@ namespace NETWORK_SECURITY_APP
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.MinimizeBox = false;
             this.Name = "Main";
             this.Text = "Simple Cryptool";
             this.panel1.ResumeLayout(false);

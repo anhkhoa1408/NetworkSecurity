@@ -101,7 +101,6 @@ namespace NETWORK_SECURITY_APP
                     {
                         arr[index] += "Key is " + shift.ToString();
                         arr[index] += System.Environment.NewLine;
-                        arr[index] += System.Environment.NewLine;
                         string decrypted = Ceasar_Decrypt(text, shift);
                         arr[index] += decrypted;
                     }
@@ -237,9 +236,20 @@ namespace NETWORK_SECURITY_APP
                 int key = z;
                 result[z - 2] = "Key is " + key.ToString();
                 result[z - 2] += System.Environment.NewLine;
-                result[z - 2] += System.Environment.NewLine;
                 result[z - 2] += RailFence_Decrypt(text, key);
                 
+            }
+            return result;
+        }
+
+
+        public static string[] RailFence_Loop_WithoutKey(string text)
+        {
+            string[] result = new string[text.Length - 2];
+            for (int z = 2; z < text.Length; z++)
+            {
+                int key = z;
+                result[z - 2] = RailFence_Decrypt(text, key);
             }
             return result;
         }
@@ -302,7 +312,7 @@ namespace NETWORK_SECURITY_APP
                 string title = "Result";
                 MessageBoxButtons buttons = MessageBoxButtons.OK;
                 MessageBox.Show(result, title, buttons);
-                System.IO.File.WriteAllText(path + @"\result.txt", result);
+                System.IO.File.WriteAllText(path + @"\encrypt.txt", result);
             }
             else if (techniqueBox.Text == "Rail Fence")
             {
@@ -322,7 +332,7 @@ namespace NETWORK_SECURITY_APP
                 title = "Result";
                 buttons = MessageBoxButtons.OK;
                 MessageBox.Show(result, title, buttons);
-                System.IO.File.WriteAllText(path + @"\result.txt", result);
+                System.IO.File.WriteAllText(path + @"\encrypt.txt", result);
             }
             else if (techniqueBox.Text == "Combine")
             {
@@ -343,13 +353,23 @@ namespace NETWORK_SECURITY_APP
                 title = "Result";
                 buttons = MessageBoxButtons.OK;
                 MessageBox.Show(finalResult, title, buttons);
-                System.IO.File.WriteAllText(path + @"\result.txt", finalResult);
+                System.IO.File.WriteAllText(path + @"\encrypt.txt", finalResult);
             }
 
         }
 
         private void decryptBtn_Click(object sender, EventArgs e)
         {
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            if (decryptTechnique.Text == "")
+            {
+                string message = "You must choose decryption technique";
+                string title = "Error";
+                MessageBoxButtons buttons = MessageBoxButtons.OK;
+                MessageBox.Show(message, title, buttons, MessageBoxIcon.Warning);
+                techniqueBox.Focus();
+                return;
+            }
             if (inputDecryptBox.Text == "")
             {
                 string message = "You must enter text";
@@ -359,18 +379,38 @@ namespace NETWORK_SECURITY_APP
                 inputEncryptBox.Focus();
                 return;
             }
+
             if (decryptTechnique.Text == "Ceasar")
             {
                 string[] str = Ceasar_Bruteforce(inputDecryptBox.Text);
+                str = str.Select(s => s += '\n').ToArray();
+                System.IO.File.WriteAllLines(path + @"\decrypt.txt", str);
                 Output output = new Output(str);
                 output.Show();
             }
             else if (decryptTechnique.Text == "Rail Fence")
             {
                 string[] result = RailFence_Loop(inputDecryptBox.Text);
+                result = result.Select(s => s += '\n').ToArray();
+                System.IO.File.WriteAllLines(path + @"\decrypt.txt", result);
                 Output output = new Output(result);
                 output.Show();
-            }    
+            }
+            else if (decryptTechnique.Text == "Combine")
+            {
+                string[] Rail_Fence_result = RailFence_Loop_WithoutKey(inputDecryptBox.Text);
+                List<string> resultList = new List<string>();
+                foreach (string result in Rail_Fence_result)
+                {
+                    string[] Ceasar_result = Ceasar_Bruteforce(result);
+                    resultList.AddRange(Ceasar_result.ToList());
+                }
+                string[] resultArray = resultList.ToArray();
+                resultArray = resultArray.Select(s => s += '\n').ToArray();
+                System.IO.File.WriteAllLines(path + @"\decrypt.txt", resultArray);
+                Output output = new Output(resultArray);
+                output.Show();
+            }
         }
     }
 }

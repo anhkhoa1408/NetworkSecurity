@@ -15,6 +15,7 @@ namespace NETWORK_SECURITY_APP
         public Output()
         {
             InitializeComponent();
+            Main main = new Main();
         }
 
         public Output(string[] result)
@@ -33,14 +34,14 @@ namespace NETWORK_SECURITY_APP
 
         private void nextBtn_Click(object sender, EventArgs e)
         {
-            decryptOutputBox.Text = temp[i];
             if (i < temp.Length - 1)
             {
                 i++;
+                decryptOutputBox.Text = temp[i];
             }
         }
 
-        private void Output_FormClosed(object sender, FormClosedEventArgs e)
+        public void Output_FormClosed(object sender, FormClosedEventArgs e)
         {
             i = 0;
         }
