@@ -23,7 +23,6 @@ namespace NETWORK_SECURITY_APP
             InitializeComponent();
             temp = result;
             decryptOutputBox.Text = temp[i];
-            i++;
         }
 
         private void yesBtn_Click(object sender, EventArgs e)
